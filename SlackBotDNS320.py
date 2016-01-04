@@ -44,24 +44,27 @@ class SlackBot:
         self.__slack.call("chat.postMessage", parameters)
 
     def slack_command_help(self):
-        """Prints this help"""
+        """prints this help"""
         for slack_method in dir(self):
             if self.slack_command_prefix in slack_method and callable(getattr(SlackBotDNS320, slack_method)):
-                self.post_message(slack_method.replace(self.slack_command_prefix, '') + '\n' +
+                self.post_message('*' + slack_method.replace(self.slack_command_prefix, '') + '* \n\t' +
                                   getattr(SlackBotDNS320, slack_method).__doc__)
 
     def slack_command_status(self):
         """hello out there"""
-        self.post_message("Hello out there!")
+        self.post_message("hello out there!")
 
+SlackBotDNS320 = SlackBot(slack_token)
 
-ts = time.time()  # TODO: not to take system time, but the last message's ts
+#  getting the latest message timestamp
+msgs = SlackBotDNS320.get_sorted_latest_messages('')
+if msgs:  # not empty
+    ts = msgs[-1]['ts']
+
+SlackBotDNS320.post_message('Ready.')
 
 while True:
-
-    SlackBotDNS320 = SlackBot(slack_token)
     msgs = SlackBotDNS320.get_sorted_latest_messages(ts)
-
     if msgs:  # not empty
         ts = msgs[-1]['ts']
         for msg in msgs:
@@ -69,4 +72,4 @@ while True:
                 slack_command = SlackBotDNS320.slack_command_prefix + msg['text']
                 if hasattr(SlackBotDNS320, slack_command) and callable(getattr(SlackBotDNS320, slack_command)):
                     getattr(SlackBotDNS320, slack_command)()
-    time.sleep(10)
+    time.sleep(5)
