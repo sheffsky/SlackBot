@@ -1,0 +1,3 @@
+[SlackBotOptions]
+token: API Token
+test_channel_id: CHNL001
