@@ -60,6 +60,8 @@ SlackBotDNS320 = SlackBot(slack_token)
 msgs = SlackBotDNS320.get_sorted_latest_messages('')
 if msgs:  # not empty
     ts = msgs[-1]['ts']
+else:
+    ts = ''
 
 SlackBotDNS320.post_message('Ready.')
 
