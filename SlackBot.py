@@ -71,7 +71,7 @@ class SlackBot:
             self.post_message('Line #{0} has been deleted.'.format(line_number))
         except IOError as e:
             self.post_message('ERROR: ' + str(e))
-            
+
     @staticmethod
     def prepare_string_for_file(string):
         return string.replace('<', '').replace('>', '')
