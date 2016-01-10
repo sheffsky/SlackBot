@@ -11,7 +11,8 @@ file_with_list = Config.get('EnvironmentOptions', 'list_file_path')
 
 
 def main():
-    slack_bot_dns320 = SlackBot(slack_token)
+
+    slack_bot_dns320 = SlackBot(slack_token, file_with_list)
 
     #  getting the latest message timestamp
     msgs = slack_bot_dns320.get_sorted_latest_messages('', test_channel_id)
@@ -31,14 +32,4 @@ def main():
                     slack_bot_dns320.parse_command(msg['text'])
         time.sleep(5)
 
-#  main()
-# call('dir', shell=True)
-# call('cmd.exe')
-
-try:
-    f = open(file_with_list, 'r+')
-    for idx, item in enumerate(f):
-        print idx, item.split(' ')[0].rjust(2), item.split(' ')[1].rjust(2), item.split(' ')[2].rjust(2)
-
-except IOError as e:
-    print('ERROR: ' + str(e))
+main()
