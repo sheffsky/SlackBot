@@ -1,5 +1,5 @@
 [SlackBotOptions]
 token: API Token
-test_channel_id: CHNL001
+channel_id: CHNL001
 [EnvironmentOptions]
 list_file_path: /mnt/HD1/file.log

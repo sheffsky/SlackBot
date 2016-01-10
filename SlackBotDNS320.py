@@ -6,16 +6,16 @@ Config = ConfigParser.ConfigParser()
 Config.read("SlackConfig.ini")
 
 slack_token = Config.get('SlackBotOptions', 'token')
-test_channel_id = Config.get('SlackBotOptions', 'test_channel_id')
+channel_id = Config.get('SlackBotOptions', 'channel_id')
 file_with_list = Config.get('EnvironmentOptions', 'list_file_path')
 
 
 def main():
 
-    slack_bot_dns320 = SlackBot(slack_token, file_with_list)
+    slack_bot_dns320 = SlackBot(slack_token, channel_id, file_with_list)
 
     #  getting the latest message timestamp
-    msgs = slack_bot_dns320.get_sorted_latest_messages('', test_channel_id)
+    msgs = slack_bot_dns320.get_sorted_latest_messages('')
     if msgs:  # not empty
         ts = msgs[-1]['ts']
     else:
@@ -24,7 +24,7 @@ def main():
     slack_bot_dns320.post_message('Ready. Type *help* to get started')
 
     while True:
-        msgs = slack_bot_dns320.get_sorted_latest_messages(ts, test_channel_id)
+        msgs = slack_bot_dns320.get_sorted_latest_messages(ts)
         if msgs:  # not empty
             ts = msgs[-1]['ts']
             for msg in msgs:

@@ -6,17 +6,18 @@ class SlackBot:
     __slack_module = ""
     username = 'dns_bot'
     icon_emoji = ':coffee:'
-    channel = '#test'
     attachments = ""
     file_with_list = ""
     slack_command_prefix = 'slack_command_'
+    channel = ""
 
-    def __init__(self, token, file_name):
+    def __init__(self, token, channel, file_name):
         self.__slack_module = SlackModule(token)
         self.file_with_list = file_name
+        self.channel = channel
 
-    def get_sorted_latest_messages(self, stamp, channel):
-        params = {"channel": channel,
+    def get_sorted_latest_messages(self, stamp):
+        params = {"channel": self.channel,
                   "oldest": stamp}
         try:
             result = self.__slack_module.call("channels.history", params)
@@ -46,8 +47,10 @@ class SlackBot:
         """prints file"""
         try:
             f = open(self.file_with_list, 'r+')
+            message = ""
             for idx, item in enumerate(f):
-                self.post_message('*' + str(idx) + '*: ' + item)
+                message += '*' + str(idx) + '*: ' + item
+            self.post_message(message)
             f.close()
         except IOError as e:
             self.post_message('ERROR: ' + str(e))
@@ -68,6 +71,10 @@ class SlackBot:
             self.post_message('Line #{0} has been deleted.'.format(line_number))
         except IOError as e:
             self.post_message('ERROR: ' + str(e))
+            
+    @staticmethod
+    def prepare_string_for_file(string):
+        return string.replace('<', '').replace('>', '')
 
     def slack_command_add_line(self, string):
         """adds line to file
@@ -75,7 +82,7 @@ class SlackBot:
         """
         try:
             f = open(self.file_with_list, 'a')
-            f.write(string + '\n')
+            f.write(self.prepare_string_for_file(string) + '\n')
             f.close()
             self.post_message('Done.')
         except IOError as e:
