@@ -19,12 +19,9 @@ class SlackBot:
     def get_sorted_latest_messages(self, stamp):
         params = {"channel": self.channel,
                   "oldest": stamp}
-        try:
-            result = self.__slack_module.call("channels.history", params)
-            return_msgs = result.json()['messages']
-            return sorted(return_msgs, key=itemgetter('ts'), reverse=False)
-        except Exception as e:
-            print e
+        result = self.__slack_module.call("channels.history", params)
+        return_msgs = result.json()['messages']
+        return sorted(return_msgs, key=itemgetter('ts'), reverse=False)
 
     def post_message(self, text):
         parameters = {"channel": self.channel,
