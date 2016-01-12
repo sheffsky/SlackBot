@@ -1,7 +1,6 @@
 import time
 import ConfigParser
 from SlackBot import SlackBot
-from subprocess import check_output
 
 Config = ConfigParser.ConfigParser()
 Config.read("SlackConfig.ini")

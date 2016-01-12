@@ -1,6 +1,7 @@
 from operator import itemgetter
 from SlackModule import SlackModule
 from subprocess import check_output
+from platform import system
 
 
 class SlackBot:
@@ -97,7 +98,10 @@ class SlackBot:
     def slack_command_list_dir(self):
         """prints the directory"""
         try:
-            out = check_output(self.dir_list_command.split(' '), shell=True)
+            if system() == 'Linux':
+                out = check_output(self.dir_list_command.split(' '))
+            else:
+                out = check_output(self.dir_list_command.split(' '), shell=True)
             self.post_message(out)
         except Exception as e:
             self.post_message('ERROR: ' + str(e))
