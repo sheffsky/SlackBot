@@ -15,7 +15,7 @@ class SlackModule:
                         result_to_check.status_code))
         if not result_to_check.json()['ok']:
             raise Exception(
-                    "Returned message: " + result_to_check.json()['error']
+                    "Error! Server returned a message: " + result_to_check.json()['error']
             )
 
     def call(self, command, parameters):

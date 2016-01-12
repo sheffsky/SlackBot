@@ -3,3 +3,4 @@ token: API Token
 channel_id: CHNL001
 [EnvironmentOptions]
 list_file_path: /mnt/HD1/file.log
+dir_list_command: ls -R /mnt
