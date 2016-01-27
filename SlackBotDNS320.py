@@ -18,7 +18,7 @@ def main():
         slack_bot_dns320.post_message('Ready. Type *help* to get started')
 
         while True:
-            time.sleep(5)
+            time.sleep(15)
             try:
                 msgs = slack_bot_dns320.get_sorted_latest_messages(timestamp)
                 if msgs:  # not empty
@@ -26,6 +26,8 @@ def main():
                     for msg in msgs:
                         if 'bot_message' not in msg:
                             slack_bot_dns320.parse_command(msg['text'])
+                print msgs
+                print "TIMESTAMP: " + timestamp
             except Exception as e:
                 print e
                 slack_bot_dns320.post_message(str(e))
