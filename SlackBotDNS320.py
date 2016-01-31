@@ -30,7 +30,6 @@ def main():
                 print "TIMESTAMP: " + timestamp
             except Exception as e:
                 print e
-                slack_bot_dns320.post_message(str(e))
 
     except Exception as e:
         print e
